@@ -1,0 +1,63 @@
+                          ====================================================
+			Installing playCopy in GNOME Desktop based Distribution
+			  ====================================================
+
+
+Contents:
+	1. Introduction
+	2. Installation
+	3. Defining the HotKey
+	4. Using playCopy as a module
+	5. Enable/Disable the notification
+	
+
+  1. Introduction
+
+	Well as you may know, *playCopy* is a python script, witch is designed for the people, who
+like to share the music they are listening with their friends in Skype, ICQ etc, using a simple
+global HotKey combination. 
+	The script works as follows: 
+		- Check if one of the supported players is playing
+		- Copy the name of the artist and the title of the song
+		- Combine the artist and the title in one string
+		- Send the end string to the clipboard
+	The script supports the following players:
+		- Rhythmbox
+		- mocp
+		- Exaile
+		- Banshee
+
+  2. Installation
+
+	The installation is very simple. After you have extracted the downloaded archive you need
+to do the following:
+		- Make the *playCopy* script executable:
+			$ chmod +x playCopy
+		- Copy the playCopy script to /usr/bin as root:
+			# cp playCopy /usr/bin
+
+  3. Defining the HotKey
+
+	Here is the tricky part. To define a global HotKey for executing the script you need to do
+the following steps:
+		- Start gconf-editor
+		- Go to apps -> metacity -> keybinding_commands
+		- Select the variable command_1 end set value: playCopy
+		- Now go to apps -> metacity -> global_keybinding
+		- Select the variable run_command_1 end set value: <Control><Alt>c
+*** You can insert your preferered key-combination, but don't forget the < and > tags
+
+  4. Using playCopy as a module
+  
+	playCopy can also be used as a module for other Python scripts. To use it, simply rename playCode to playCode.py and use as follows:
+	
+	import playCopy
+	print playCopy.cur_song() # Use playCopy.cur_song() however you wish!
+
+  5. Enable/Disable the notification
+	
+	In order to enable or disable the notifications is to edit the playCopy script and set the variable show_not, where:
+		1 : Enabled (notification for the current playing song will be shown)
+		0 : Disabled (no notification will be shown)
+
+Have fun and don't hesitate to suggest new players or other options to the script.
