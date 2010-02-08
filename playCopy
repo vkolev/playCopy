@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-#       playCopy 0.5 (python script)
+#       playCopy 1.0 (python script)
 #       
 #       Copyright 2009 Vladimir Kolev <admin@vladimirkolev.com>
 #       
@@ -74,6 +74,11 @@ def cur_song():
 		 player = dbus.Interface(proxy_obj2, 'org.atheme.audacious')
 		 # Store the title in the song variable
 		 song = player.SongTitle(ct)
+	elif "jajuk" in os.popen('ps -A | grep jajuk').readline():
+		session_bus = dbus.SessionBus()
+		proxyobj1 = session_bus.get_object('org.jajuk.dbus.DBusSupport', '/JajukDBus')
+		selected = dbus.Interface(proxyobj1, 'org.jajuk.services.dbus.DBusSupport')
+		song = selected.current()
 	else:
 		if show_not == 1:
 			import pynotify
@@ -85,13 +90,11 @@ def cur_song():
 if __name__ == "__main__":
 	import pygtk
 	import gtk	
-	os.popen('xsel -c')
 	# Define the clipboard
 	clipboard = gtk.clipboard_get()
 	# Get the song name from cur_song(), copy the string to the clipboard and store it
 	clipboard.set_text(cur_song())
 	clipboard.store()
-	os.popen('xsel','wb').write(cur_song())
 	if show_not == 1:
 		try:
 			import pynotify
